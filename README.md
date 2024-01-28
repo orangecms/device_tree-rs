@@ -44,5 +44,5 @@ extract .dtb files from images
 ```
 $> extract-dtb
 
-Usage: extract-dtb --filename <FILENAME> --dest <DEST> 
+Usage: cargo run bin extract-dtb -- --filename <FILENAME> --dest <DEST> 
 ```
