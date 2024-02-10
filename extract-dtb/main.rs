@@ -11,16 +11,21 @@ const DTB_MAGIC: u32 = 0xd00d_feed;
 #[command(author, version, about, long_about = None)]
 struct Args {
     /// Filename
-    #[arg(short, long)]
+    #[arg(required = true)]
     filename: String,
-    #[arg(short, long)]
+    #[arg(required = false)]
     dest: String,
 }
 
 fn main() {
     let args = Args::parse();
     let filename = args.filename;
-    let dest = args.dest;
+
+    let dest = if args.dest.is_empty() {
+        String::from("./")
+    } else {
+        String::from(args.dest)
+    };
 
     let mut f = File::open(filename).unwrap();
     let step = 8;
@@ -44,7 +49,7 @@ fn main() {
             let mut buf = vec![0; size];
             f.read_exact(&mut buf).unwrap();
 
-            let dt = DT::load(&buf).unwrap();
+            let _dt = DT::load(&buf).unwrap();
 
             // does it exist? if not, rule 34
             fs::create_dir_all(&dest).unwrap();
